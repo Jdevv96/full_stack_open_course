@@ -6,39 +6,36 @@ const Button = ({handleClick, text}) => (
   </button>
 )
 
+const Statistics = (props) => {
+  const total = props.positive + props.negative + props.neutral
+  const avg = total >= 1 ? (props.positive - props.negative) / total : 0
+  const percentPositive = total >= 1 ? ((props.positive / total) * 100) : 0
+  return (
+    <div>
+      <p>Total: {total}</p>
+      <p>Average Score: {avg}</p>
+      <p>Percent Positive: {percentPositive}%</p>
+    </div>
+    
+  )
+}
+
+
 const App = () => {
   const [positive, setPositive] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [negative, setNegative] = useState(0)
-  const [total, setTotal] = useState(0)
-  const [average, setAverage] = useState(0)
-  const [percentPositive, setPercentPositive] = useState(0)
 
   const handlePositiveClick = () => {
-    const p = positive + 1
-    setPositive(p)
-    const t = total + 1
-    setTotal(t)
-    setAverage( (p - negative) / t)
-    setPercentPositive((p / t) * 100)
+    setPositive(positive + 1)
   }
 
   const handleNeutralClick = () => {
-    const n = neutral + 1
-    setNeutral(n)
-    const t = total + 1
-    setTotal(t)
-    setAverage( (positive - negative) / t)
-    setPercentPositive((positive / t) * 100)
+    setNeutral(neutral + 1)
   }
 
   const handleNegativeClick = () => {
-    const n = negative + 1
-    setNegative(n)
-    const t = total + 1
-    setTotal(total + 1)
-    setAverage( (positive - n) / t)
-    setPercentPositive((positive / t) * 100)
+    setNegative(negative + 1)
   }
 
 
@@ -53,9 +50,7 @@ const App = () => {
       <p>Positive: {positive} </p>
       <p>Neutral: {neutral}</p>
       <p>Negative: {negative}</p>
-      <p>Total: {total}</p>
-      <p>Average Score: {average}</p>
-      <p>Positive Score %: {percentPositive.toFixed(2)}%</p>
+      <Statistics positive={positive} negative={negative} neutral={neutral}/>
     </div>
   )
 }
