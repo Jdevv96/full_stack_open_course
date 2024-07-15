@@ -23,7 +23,7 @@ const App = () => {
 
   const handlePoints = () => {
     const copy = [...points]
-    copy[selected] +=1
+    copy[selected] += 1
     setPoints(copy)
   }
 
@@ -32,6 +32,8 @@ const App = () => {
     setSelected(randomNumber)
   }
 
+  const mostVotes = points.indexOf(Math.max(...points))
+
   return (
     <div>
       <h2>Anecdote of the day</h2>
@@ -39,6 +41,8 @@ const App = () => {
       <p>{points[selected]} vote(s)</p>
       <Button handleClick={handlePoints} text={'Vote'}/>
       <Button handleClick={handleClick} text={'Next Anecdote'}/>
+      <h2>Anecdote with most votes</h2>
+      <p>{anecdotes[mostVotes]}</p>
     </div>
   )
 };
