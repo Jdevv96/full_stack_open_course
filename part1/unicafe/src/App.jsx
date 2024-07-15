@@ -6,7 +6,10 @@ const Button = ({ handleClick, text }) => (
 
 const StatisticLine = ({text, value}) => {
   return (
-  <div >{text}: {value}</div>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   )
 }
 
@@ -19,14 +22,16 @@ const Statistics = (props) => {
     return <div>The app is used by pressing the buttons.</div>;
   } else {
     return (
-      <div>
+      <table>
+        <tbody>
         <StatisticLine text="positive" value={props.positive} />
         <StatisticLine text="neutral" value={props.neutral} />
         <StatisticLine text="negative" value={props.neutral} />
         <StatisticLine text="total" value={total} />
         <StatisticLine text="average score" value={avg} />
-        <StatisticLine text="percent positive" value={percentPositive}/>
-      </div>
+        <StatisticLine text="percent positive" value={percentPositive} />
+        </tbody>
+      </table>
     );
   }
 };
@@ -56,7 +61,6 @@ const App = () => {
       <Button handleClick={handleNegativeClick} text={"negative"} />
 
       <h2>Statistics: </h2>
-
       <Statistics positive={positive} negative={negative} neutral={neutral} />
     </div>
   );
