@@ -1,12 +1,14 @@
 // APP RECEIVES PROP FROM 'MAIN' AND PASSES IT DOWN TO COMPONENTS
 
-import Course from './components/Course'
+import Course from "./components/Course";
 
-const App = ({courseInfo}) => {
-  
+const App = ({ courseInfo }) => {
+
   return (
-    <Course course={courseInfo} />
-  )
-}
+    <div>
+      <Course course={courseInfo} />
+    </div>
+  );
+};
 
-export default App
+export default App;
