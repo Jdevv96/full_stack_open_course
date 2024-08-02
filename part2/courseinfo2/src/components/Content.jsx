@@ -1,4 +1,4 @@
-// RECEIVES PARTS ARRAY AND PASSES PROPS DOWN TO EACH PART
+// RECEIVES DATA FROM APP AND PASSES PROPS DOWN TO EACH PART
 
 import Part from './Part'
 import React from 'react'
@@ -6,7 +6,8 @@ import { useState } from "react";
 
 const Content = ({parts}) => {
     const handleTotal = parts.reduce((sum, part) => sum + part.exercises, 0);
-    const [count, setCount] = useState(handleTotal)
+    const [count] = useState(handleTotal)
+   
 
 
     return (

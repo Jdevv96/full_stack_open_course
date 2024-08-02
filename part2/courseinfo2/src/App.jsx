@@ -2,11 +2,14 @@
 
 import Course from "./components/Course";
 
-const App = ({ courseInfo }) => {
+const App = ({ courseList }) => {
 
   return (
+    
     <div>
-      <Course course={courseInfo} />
+      <h1>Web Development Curriculum</h1>
+      {courseList.map(course => <Course key={course.id} course={course} />)}
+      {/* <Course course={courseList} /> */}
     </div>
   );
 };
