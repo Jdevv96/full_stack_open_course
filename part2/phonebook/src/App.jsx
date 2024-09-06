@@ -1,10 +1,8 @@
 import { useState } from 'react'
 import Person from "./components/Person"
 
-const App = () => {
-  const [persons, setPersons] = useState([
-    {name: 'Arto Hellas'}
-  ])
+const App = (props) => {
+  const [persons, setPersons] = useState(props.persons)
   const [newName, setNewName] = useState('')
 
   const addName = (event) => {
@@ -13,6 +11,10 @@ const App = () => {
       name: newName
     }
 
+    if (persons.some(person => person.name === newName)) {
+      window.alert(`${newName} is already added to the phonebook.`)
+      return
+    }
     setPersons(persons.concat(personObject))
     setNewName('')
   }
@@ -35,7 +37,7 @@ const App = () => {
       <h2>Numbers</h2>
       <ul>
         {persons.map((person) => (
-          <Person key={person.id} person={person}/>
+          <Person key={person.name} person={person}/>
         ))}
       </ul>
     </div>
