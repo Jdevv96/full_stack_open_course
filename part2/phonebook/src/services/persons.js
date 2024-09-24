@@ -7,15 +7,19 @@ const getAll = () => {
     return request.then( response => response.data)
 }
 
+// CREATE
 const create = newObject => {
     const request = axios.post(baseUrl, newObject)
     return request.then( response => response.data)
 }
 
+// UPDATE
 const update = (id, updatedOjbect) => {
     const request = axios.put(`baseUrl/${id}`, updatedOjbect)
     return request.then( response => response.data)
 }
+
+// DELETE
 
 export default {
     getAll,
