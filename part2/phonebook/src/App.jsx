@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Search from "./components/Search"
 import ContactForm from "./components/ContactForm"
 import Persons from "./components/Persons"
+import personService from "./services/persons"
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,13 +11,12 @@ const App = () => {
   const [personToFind, setPersonToFind] = useState('')
   const [showAll, setShowAll] = useState(true)
 
-  const hook = () => {
-    axios.get('http://localhost:3001/persons').then(response => {
-      setPersons(response.data)
+  useEffect( () => {
+    personService.getAll().then( initialContacts => {
+      setPersons(initialContacts)
     })
-  }
+  }, [])
 
-  useEffect(hook, [])
   // event
   const addPerson = (event) => {
     event.preventDefault()
@@ -30,9 +29,12 @@ const App = () => {
       window.alert(`${newName} is already added to the phonebook.`)
       return
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+    personService.create(personObject).then( returnedPerson => {
+      setPersons(persons.concat(returnedPerson))
+      setNewName('')
+      setNewNumber('')
+    })
+    console.log(personObject.number)
   }
 
   const handleNameChange = (event) => {
@@ -55,7 +57,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Search personToFind={personToFind} handleSearchChange={handleSearchChange}/>
       <h3>Add a new</h3>
-      <ContactForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
+      <ContactForm addPerson={addPerson} newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
       <h3>Numbers:</h3>
       <Persons personsToShow={personsToShow} />
     </div>
