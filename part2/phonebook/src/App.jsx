@@ -17,14 +17,12 @@ const App = () => {
     })
   }, [])
 
-  // event
   const addPerson = (event) => {
     event.preventDefault()
     const personObject = {
       name: newName,
       number: newNumber
     }
-
     if (persons.some(person => person.name === newName)) {
       window.alert(`${newName} is already added to the phonebook.`)
       return
@@ -35,6 +33,16 @@ const App = () => {
       setNewNumber('')
     })
     console.log(personObject.number)
+  }
+
+  const removeContact = id => {
+    const contact = persons.find( c => c.id === id)
+    
+    personService.deleteContact(id).then( () => {
+      setPersons( persons.filter( p => p.id !== id))
+    }).catch( error => {
+      alert(`the person '${contact.name}' could not be removed.`)
+    })
   }
 
   const handleNameChange = (event) => {
@@ -59,7 +67,7 @@ const App = () => {
       <h3>Add a new</h3>
       <ContactForm addPerson={addPerson} newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
       <h3>Numbers:</h3>
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow} removeContact={removeContact} />
     </div>
   )
 }

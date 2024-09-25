@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = 'http://localhost:3001/persons'
+const baseUrl = 'http://localhost:3001/persons/'
 
 // GET 
 const getAll = () => {
@@ -15,14 +15,18 @@ const create = newObject => {
 
 // UPDATE
 const update = (id, updatedOjbect) => {
-    const request = axios.put(`baseUrl/${id}`, updatedOjbect)
+    const request = axios.put(`${baseUrl}${id}`, updatedOjbect)
     return request.then( response => response.data)
 }
 
 // DELETE
-
+const deleteContact = id => {
+    const request = axios.delete(`${baseUrl}${id}`)
+    return request.then( response => response.data)
+}
 export default {
     getAll,
     create,
-    update
+    update,
+    deleteContact
 }
