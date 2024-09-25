@@ -39,7 +39,10 @@ const App = () => {
     const contact = persons.find( c => c.id === id)
     
     personService.deleteContact(id).then( () => {
-      setPersons( persons.filter( p => p.id !== id))
+      if (window.confirm("Are you sure you want to remove contact?")) {
+        setPersons( persons.filter( p => p.id !== id))
+      }
+      
     }).catch( error => {
       alert(`the person '${contact.name}' could not be removed.`)
     })
