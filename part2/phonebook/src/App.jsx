@@ -24,7 +24,16 @@ const App = () => {
       number: newNumber
     }
     if (persons.some(person => person.name === newName)) {
-      window.alert(`${newName} is already added to the phonebook.`)
+      const targetContact = persons.find( n => n.name === newName)
+      if (window.confirm(`'${newName}' is already in your contacts. Would you like to replace the number?`)) {
+        personService.update(targetContact.id, personObject).then( returnedContact => {
+          setPersons(persons.map( p => p.id !== targetContact.id ? p : returnedContact))
+        }).catch( () => {
+          alert('could not perform action.')
+        })
+      }
+      setNewName('')
+      setNewNumber('')
       return
     }
     personService.create(personObject).then( returnedPerson => {
