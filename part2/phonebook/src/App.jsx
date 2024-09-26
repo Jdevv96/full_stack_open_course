@@ -15,6 +15,7 @@ const App = () => {
   const [successfulAlert, setSuccessfulAlert] = useState(false)
 
   useEffect( () => {
+    // READ
     personService.getAll().then( initialContacts => {
       setPersons(initialContacts)
     })
@@ -29,6 +30,7 @@ const App = () => {
     if (persons.some(person => person.name === newName)) {
       const targetContact = persons.find( n => n.name === newName)
       if (window.confirm(`'${newName}' is already in your contacts. Would you like to replace the number?`)) {
+        // UPDATE
         personService.update(targetContact.id, personObject).then( returnedContact => {
           setPersons(persons.map( p => p.id !== targetContact.id ? p : returnedContact))
           setAlertMessage(
@@ -54,6 +56,7 @@ const App = () => {
       setNewNumber('')
       return
     }
+    // CREATE
     personService.create(personObject).then( returnedPerson => {
       setPersons(persons.concat(returnedPerson))
       setAlertMessage(
@@ -71,7 +74,7 @@ const App = () => {
 
   const removeContact = id => {
     const contact = persons.find( c => c.id === id)
-    
+    // DELETE
     personService.deleteContact(id).then( () => {
       if (window.confirm("Are you sure you want to remove contact?")) {
         setPersons( persons.filter( p => p.id !== id))

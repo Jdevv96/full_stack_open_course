@@ -4,7 +4,7 @@ const Notification = ({message, successfulAlert}) => {
     }
 
     return (
-        <div className={`default-alert ${successfulAlert ? 'alert-success' : 'alert-failure'}`}>
+        <div className={"default-alert" `${successfulAlert ? 'alert-success' : 'alert-failure'}`}>
             <p>
                 {message}
             </p>
