@@ -12,6 +12,7 @@ const App = () => {
   const [personToFind, setPersonToFind] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [alertMessage, setAlertMessage] = useState(null)
+  const [successfulAlert, setSuccessfulAlert] = useState(false)
 
   useEffect( () => {
     personService.getAll().then( initialContacts => {
@@ -33,13 +34,16 @@ const App = () => {
           setAlertMessage(
             `The number for '${newName}' has been updated!`
           )
+          setSuccessfulAlert(true) // successful alert
           setTimeout(() => {
             setAlertMessage(null)
+            setSuccessfulAlert(false) // failed alert
           }, 5000)
         }).catch( (error) => {
           setAlertMessage(
             `${error}: '${newName}' could not be added to the phonebook. Please try again.`
           )
+          setSuccessfulAlert(false)
           setTimeout(() => {
             setAlertMessage(null)
           }, 5000)
@@ -55,8 +59,10 @@ const App = () => {
       setAlertMessage(
         `The contact '${newName}' has been added to your phonebook!`
       )
+      setSuccessfulAlert(true) // successful alert
       setTimeout(() => {
         setAlertMessage(null)
+        setSuccessfulAlert(false) // successful alert
       }, 5000)
       setNewName('')
       setNewNumber('')
@@ -72,18 +78,20 @@ const App = () => {
         setAlertMessage(
           `The contact '${contact.name}' has been removed from your phonebook!`
         )
+        setSuccessfulAlert(true) // successful alert
+        setTimeout(() => {
+          setAlertMessage(null)
+          setSuccessfulAlert(false)
+        }, 5000)
+      }
+    }).catch( error => {
+        setAlertMessage(
+          `${error}: The contact '${contact.name}' could not be removed. Please try again.`
+        )
+        setSuccessfulAlert(false) // failed alert
         setTimeout(() => {
           setAlertMessage(null)
         }, 5000)
-      }
-      
-    }).catch( error => {
-      setAlertMessage(
-        `The contact '${contact.name}' could not be removed. Please try again.`
-      )
-      setTimeout(() => {
-        setAlertMessage(null)
-      }, 5000)
     })
   }
 
@@ -105,7 +113,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={alertMessage} />
+      <Notification message={alertMessage} successfulAlert={successfulAlert}/>
       <Search personToFind={personToFind} handleSearchChange={handleSearchChange}/>
       <h3>Add a new</h3>
       <ContactForm addPerson={addPerson} newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
