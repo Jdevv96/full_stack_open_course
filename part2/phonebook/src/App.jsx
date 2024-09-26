@@ -3,6 +3,7 @@ import Search from "./components/Search"
 import ContactForm from "./components/ContactForm"
 import Persons from "./components/Persons"
 import personService from "./services/persons"
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -10,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [personToFind, setPersonToFind] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [alertMessage, setAlertMessage] = useState(null)
 
   useEffect( () => {
     personService.getAll().then( initialContacts => {
@@ -28,20 +30,37 @@ const App = () => {
       if (window.confirm(`'${newName}' is already in your contacts. Would you like to replace the number?`)) {
         personService.update(targetContact.id, personObject).then( returnedContact => {
           setPersons(persons.map( p => p.id !== targetContact.id ? p : returnedContact))
-        }).catch( () => {
-          alert('could not perform action.')
+          setAlertMessage(
+            `The number for '${newName}' has been updated!`
+          )
+          setTimeout(() => {
+            setAlertMessage(null)
+          }, 5000)
+        }).catch( (error) => {
+          setAlertMessage(
+            `${error}: '${newName}' could not be added to the phonebook. Please try again.`
+          )
+          setTimeout(() => {
+            setAlertMessage(null)
+          }, 5000)
         })
       }
+      
       setNewName('')
       setNewNumber('')
       return
     }
     personService.create(personObject).then( returnedPerson => {
       setPersons(persons.concat(returnedPerson))
+      setAlertMessage(
+        `The contact '${newName}' has been added to your phonebook!`
+      )
+      setTimeout(() => {
+        setAlertMessage(null)
+      }, 5000)
       setNewName('')
       setNewNumber('')
     })
-    console.log(personObject.number)
   }
 
   const removeContact = id => {
@@ -50,10 +69,21 @@ const App = () => {
     personService.deleteContact(id).then( () => {
       if (window.confirm("Are you sure you want to remove contact?")) {
         setPersons( persons.filter( p => p.id !== id))
+        setAlertMessage(
+          `The contact '${contact.name}' has been removed from your phonebook!`
+        )
+        setTimeout(() => {
+          setAlertMessage(null)
+        }, 5000)
       }
       
     }).catch( error => {
-      alert(`the person '${contact.name}' could not be removed.`)
+      setAlertMessage(
+        `The contact '${contact.name}' could not be removed. Please try again.`
+      )
+      setTimeout(() => {
+        setAlertMessage(null)
+      }, 5000)
     })
   }
 
@@ -75,6 +105,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={alertMessage} />
       <Search personToFind={personToFind} handleSearchChange={handleSearchChange}/>
       <h3>Add a new</h3>
       <ContactForm addPerson={addPerson} newName={newName} newNumber={newNumber} handleNameChange={handleNameChange} handleNumberChange={handleNumberChange}/>
