@@ -33,6 +33,11 @@
     {
       "id": "289c",
       "content": "test",
+      "important": false
+    },
+    {
+      "id": "5f28",
+      "content": "",
       "important": true
     }
   ]
