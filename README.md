@@ -21,3 +21,8 @@ Continuing on with the intro to React, this sections focuses on :
   - Axios and Promises
   - Error Handling
 - CSS styles with React
+
+**Part 3: Programming a Server**
+
+The focus here is on implementing a simple REST API on the server side using NodeJS and Express.
+- Data to be stored in MongoDB
