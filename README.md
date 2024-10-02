@@ -22,10 +22,12 @@ Build a Notes app that incorporates the following:
   - Error Handling
 - CSS styles with React
 
-Notes App:
+**Notes App:**
+
 A tutorial app aimed at getting used to the concepts of a React application. A note can be created and persisted to a JSON serv, as well as deleted. Notes can also be marked as important or not important. 
 
-PhoneBook App: 
+**PhoneBook App:**
+
 A simple app that acts as a contact book, capable of adding and removing a contact name and phone number. Data is persisted to a JSON server.
 
 **Part 3: Programming a Server**
