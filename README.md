@@ -35,3 +35,6 @@ A simple app that acts as a contact book, capable of adding and removing a conta
 The focus here is on implementing a simple REST API on the server side using NodeJS and Express.
 - Rebuilding the Notes app using Node and Express to build a simple web server
 - Data to be stored in MongoDB
+
+**Notes App V2:**
+Moved to its own repo here!
