@@ -57,7 +57,9 @@ const App = () => {
       return
     }
     // CREATE
-    personService.create(personObject).then( returnedPerson => {
+    personService
+    .create(personObject)
+    .then( returnedPerson => {
       setPersons(persons.concat(returnedPerson))
       setAlertMessage(
         `The contact '${newName}' has been added to your phonebook!`
@@ -69,6 +71,15 @@ const App = () => {
       }, 5000)
       setNewName('')
       setNewNumber('')
+    })
+    .catch(error => {
+      setAlertMessage(
+        error.response.data.error
+      )
+      setSuccessfulAlert(false) // successful alert
+      setTimeout(() => {
+        setAlertMessage(null) // successful alert
+      }, 5000)
     })
   }
 
